@@ -37,7 +37,7 @@ of [OpenCV](http://opencv.org/) is correctly set.
 
 The class for face identification is included in `seeta` namespace. To use the 
 function of SeetaFace Identification, one should first instantiate an object of 
-`seeta::FaceIdentification` with path of the model file. The model file seeta_fr_v1.0.bin can be achieved by unzipping the files seeta_fr_v1.0.part1.rar and seeta_fr_v1.0.part2.rar in [model](./model) directory.  
+`seeta::FaceIdentification` with path of the model file. The model file seeta_fr_v1.0.bin can be achieved by unzipping the files "seeta_fr_v1.0.part1.rar" and "seeta_fr_v1.0.part2.rar" in subdirectory [**model**](./model).  
 
 ```c++
 FaceIdentification face_recognizer("seeta_fr_v1.0.bin");
