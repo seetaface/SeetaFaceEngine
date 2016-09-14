@@ -42,7 +42,7 @@ void SpatialTransformNet::SetUp() {
     is_mat_data_ = *(int *)(this->hyper_param()->param("is_mat_data"));
   }
   else {
-    is_mat_data_ = false;
+    is_mat_data_ = 0;
   }
   // check input and output blob size
   this->input_blobs().resize(2);
@@ -119,10 +119,10 @@ void SpatialTransformNet::Execute() {
 
 double SpatialTransformNet::Sampling(const float* const feat_map, int H, int W, 
     double x, double y, double scale) {
+  double ans = 0.;
   if (type_ == "linear") {
     // bilinear subsampling
     int ux = floor(x), uy = floor(y);
-    double ans = 0;
     if (ux >= 0 && ux < H - 1 && uy >= 0 && uy < W - 1) {
       int offset = ux * W + uy;
       double cof_x = x - ux;
@@ -131,11 +131,9 @@ double SpatialTransformNet::Sampling(const float* const feat_map, int H, int W,
       ans = (1 - cof_x) * ans + cof_x * ((1 - cof_y) * feat_map[offset + W] 
           + cof_y * feat_map[offset + W + 1]);
     }
-    return ans;
   }
   else if (type_ == "bicubic") { // Need to be sped up
     // bicubic subsampling
-    double ans = 0;
     if (x >= 0 && x < H && y >= 0 && y < W) {
       scale = std::min(scale, double(1.0));
       double kernel_width =  std::max(8.0, 4.0 / scale); // bicubic kernel width
@@ -171,16 +169,16 @@ double SpatialTransformNet::Sampling(const float* const feat_map, int H, int W,
         ans += val * weights_x[i];
       }
     }
-    return ans;
   }
+  return ans;
 }
 
 double SpatialTransformNet::Sampling(const unsigned char* const feat_map, 
     int c, int H, int W, int C, double x, double y, double scale) {
+  double ans = 0.;
   if (type_ == "linear") {
     // bilinear subsampling
     int ux = floor(x), uy = floor(y);
-    double ans = 0;
     if (ux >= 0 && ux < H - 1 && uy >= 0 && uy < W - 1) {
       int offset = (ux * W + uy) * C + c;
       double cof_x = x - ux;
@@ -189,11 +187,9 @@ double SpatialTransformNet::Sampling(const unsigned char* const feat_map,
       ans = (1 - cof_x) * ans + cof_x * ((1 - cof_y) * feat_map[offset + W * C]
         + cof_y * feat_map[offset + W * C + C]);
     }
-    return ans;
   }
   else if (type_ == "bicubic") { // Need to be sped up
     // bicubic subsampling
-    double ans = 0;
     if (x >= 0 && x < H && y >= 0 && y < W) {
       scale = std::min(scale, double(1.0));
       double kernel_width = std::max(8.0, 4.0 / scale); // bicubic kernel width
@@ -229,8 +225,8 @@ double SpatialTransformNet::Sampling(const unsigned char* const feat_map,
         ans += val * weights_x[i];
       }
     }
-    return ans;
   }
+  return ans;
 }
 
 double SpatialTransformNet::Cubic(double x) {
