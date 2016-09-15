@@ -29,6 +29,7 @@
  *
  */
 
+#include <cmath>
 #include "feat/surf_feature_map.h"
 
 namespace seeta {

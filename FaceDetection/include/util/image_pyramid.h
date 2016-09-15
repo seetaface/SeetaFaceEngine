@@ -34,6 +34,7 @@
 
 #include <cstdint>
 #include <string>
+#include <cstring>
 
 #include "common.h"
 
