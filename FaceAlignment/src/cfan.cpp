@@ -425,7 +425,7 @@ bool CCFAN::ResizeImage(const unsigned char *src_im, int src_width, int src_heig
 
   double	lfx_scl, lfy_scl;
   if (src_width == dst_width && src_height == dst_height) {
-    std::memcpy(dst_im, src_im, src_width * src_height * sizeof(unsigned char));
+    memcpy(dst_im, src_im, src_width * src_height * sizeof(unsigned char));
     return true;
   }
 

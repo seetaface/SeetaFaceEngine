@@ -31,7 +31,7 @@
  
 #pragma once
 #include "math.h"
-#include "SIFT.h"
+#include "sift.h"
 #include "common.h"
 
 class CCFAN{
