@@ -81,7 +81,7 @@ int main(int argc, char** argv)
   image_data.num_channels = 1;
 
   // Detect faces
-  std::vector<seeta::FaceInfo> faces = detector.Detect(img_data);
+  std::vector<seeta::FaceInfo> faces = detector.Detect(image_data);
   int32_t face_num = static_cast<int32_t>(faces.size());
 
   if (face_num == 0)
