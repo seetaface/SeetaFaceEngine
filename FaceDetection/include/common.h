@@ -92,6 +92,10 @@ typedef struct FaceInfo {
   double score; /**< Larger score should mean higher confidence. */
 } FaceInfo;
 
+  typedef struct {
+    double x;
+    double y;
+  } FacialLandmark;
 }  // namespace seeta
 
 #endif  // SEETA_COMMON_H_

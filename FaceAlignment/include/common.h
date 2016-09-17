@@ -35,7 +35,7 @@
 #include <cstdint>
 
 #if defined (_MSC_VER) || defined (_WIN32) || defined (_WIN64)
-  #ifndef SEETA_API
+  #ifdef SEETA_EXPORTS
     #define  SEETA_API __declspec(dllexport)
   #else
     #define  SEETA_API __declspec(dllimport)
