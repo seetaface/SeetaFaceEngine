@@ -30,7 +30,7 @@
  */
  
 #pragma once
-#include "math.h"
+#include <cmath>
 #include "sift.h"
 #include "common.h"
 

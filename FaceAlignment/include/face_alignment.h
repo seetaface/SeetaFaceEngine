@@ -32,6 +32,7 @@
 #ifndef SEETA_FACE_ALIGNMENT_H_
 #define SEETA_FACE_ALIGNMENT_H_
 
+#include <cstdlib>
 #include "common.h"
 class CCFAN;
 
