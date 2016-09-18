@@ -59,7 +59,7 @@ FacenessNet [2] | 80x80 | n/a | 20 FPS
 8. Build.
 
 ### How to Build in Linux
-- build
+- Build
 ```shell
 mkdir build
 cd build
@@ -67,9 +67,9 @@ cmake ..
 make -j${nproc}
 ```
 
-- run demo
+- Run demo
 ```shell
-./build/facedet_test data/2007_007763.jpg model/seeta_fd_frontal_v1.0.bin
+./build/facedet_test image_file model/seeta_fd_frontal_v1.0.bin
 ```
 
 ### How to run SeetaFace Detector

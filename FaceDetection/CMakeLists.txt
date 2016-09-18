@@ -1,22 +1,28 @@
-cmake_minimum_required(VERSION 2.8.4)
+cmake_minimum_required(VERSION 3.1.0)
 
 project(seeta_facedet_lib)
 
 # Build options
 option(BUILD_EXAMPLES  "Set to ON to build examples"  ON)
 option(USE_OPENMP      "Set to ON to build use openmp"  ON)
+option(USE_SSE         "Set to ON to build use SSE"  ON)
 
 # Use C++11
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 message(STATUS "C++11 support has been enabled by default.")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse4.1")
+# Use SSE
+if (USE_SSE)
+    add_definitions(-DUSE_SSE)
+    message(STATUS "Use SSE")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse4.1")
+endif()
 
 # Use OpenMP
 if (USE_OPENMP)
     find_package(OpenMP QUIET)
-    if (OpenMP_FOUND)
+    if (OPENMP_FOUND)
         message(STATUS "Use OpenMP")
         add_definitions(-DUSE_OPENMP)
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
@@ -41,9 +47,11 @@ set(src_files
     src/fust.cpp
     )
 
+# Build shared library
 add_library(seeta_facedet_lib SHARED ${src_files})
 set(facedet_required_libs seeta_facedet_lib)
 
+# Build examples
 if (BUILD_EXAMPLES)
     message(STATUS "Build with examples.")
     find_package(OpenCV)
