@@ -50,7 +50,7 @@ int main(int argc, char** argv)
   detector.SetWindowStep(4, 4);
 
   // Initialize face alignment model 
-  seeta::FaceAlignment point_detector("seeta_fa_v1.0.bin");
+  seeta::FaceAlignment point_detector("seeta_fa_v1.1.bin");
 
   //load image
   IplImage *img_grayscale = NULL;

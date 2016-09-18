@@ -40,7 +40,7 @@ class FaceAlignment{
  public:
   /** A constructor with an optional argument specifying path of the model file.
   *  If called with no argument, the model file is assumed to be stored in the
-  *  the working directory as "seeta_fa_v1.0.bin".
+  *  the working directory as "seeta_fa_v1.1.bin".
   *
   *  @param model_path Path of the model file, either absolute or relative to
   *  the working directory.

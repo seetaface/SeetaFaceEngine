@@ -38,7 +38,7 @@
 namespace seeta {
   /** A constructor with an optional argument specifying path of the model file.
    *  If called with no argument, the model file is assumed to be stored in the
-   *  the working directory as "seeta_fa_v1.0.bin".
+   *  the working directory as "seeta_fa_v1.1.bin".
    *
    *  @param model_path Path of the model file, either absolute or relative to
    *  the working directory.
@@ -46,7 +46,7 @@ namespace seeta {
   FaceAlignment::FaceAlignment(const char * model_path){
     facial_detector = new CCFAN();
     if (model_path == NULL)
-      model_path = "seeta_fa_v1.0.bin";
+      model_path = "seeta_fa_v1.1.bin";
     facial_detector->InitModel(model_path);
   }
 
