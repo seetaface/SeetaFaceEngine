@@ -34,79 +34,108 @@
 #include <iostream>
 #include <string>
 
-#include "cv.h"
-#include "highgui.h"
+#ifdef _WIN32
+#pragma once
+#include <opencv2/core/version.hpp>
+
+#define CV_VERSION_ID CVAUX_STR(CV_MAJOR_VERSION) CVAUX_STR(CV_MINOR_VERSION) \
+  CVAUX_STR(CV_SUBMINOR_VERSION)
+
+#ifdef _DEBUG
+#define cvLIB(name) "opencv_" name CV_VERSION_ID "d"
+#else
+#define cvLIB(name) "opencv_" name CV_VERSION_ID
+#endif //_DEBUG
+
+#pragma comment( lib, cvLIB("core") )
+#pragma comment( lib, cvLIB("imgproc") )
+#pragma comment( lib, cvLIB("highgui") )
+
+#endif //_WIN32
+
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 
 #include "face_detection.h"
 #include "face_alignment.h"
 
+#ifdef _WIN32
+std::string MODEL_DIR = "../../FaceDetection/model/";
+std::string ALIENMENT_MODEL_DIR = "../../FaceAlignment/model/";
+#else
+std::string MODEL_DIR = "../../../FaceDetection/model/";
+std::string ALIENMENT_MODEL_DIR = "../../../FaceAlignment/model/";
+#endif
+
+#define PI 3.14159265
+
 int main(int argc, char** argv)
 {
+  const char* img_path = "test_image.jpg";
+  if (argc >= 2) {
+    img_path = argv[1];
+  }
+
   // Initialize face detection model
-  seeta::FaceDetection detector("seeta_fd_frontal_v1.0.bin");
+  seeta::FaceDetection detector((MODEL_DIR + "seeta_fd_frontal_v1.0.bin").c_str());
   detector.SetMinFaceSize(40);
   detector.SetScoreThresh(2.f);
   detector.SetImagePyramidScaleFactor(0.8f);
   detector.SetWindowStep(4, 4);
 
   // Initialize face alignment model 
-  seeta::FaceAlignment point_detector("../model/seeta_fa_v1.1.bin");
+  seeta::FaceAlignment point_detector((ALIENMENT_MODEL_DIR + "seeta_fa_v1.1.bin").c_str());
 
   //load image
-  IplImage *img_grayscale = NULL;
-  img_grayscale = cvLoadImage("../data/image_0001.png", 0);
-  if (img_grayscale == NULL)
+  cv::Mat img = cv::imread(img_path, cv::IMREAD_UNCHANGED);
+  if (!img.data)
   {
-    return 0;
+    std::cerr << "Could not open or find the image" << std::endl;
+    return -1;
   }
 
-  IplImage *img_color = cvLoadImage("../data/image_0001.png", 1);
+  cv::Mat img_gray;
+  if (img.channels() != 1)
+    cv::cvtColor(img, img_gray, cv::COLOR_BGR2GRAY);
+  else
+    img_gray = img;
+
   int pts_num = 5;
-  int im_width = img_grayscale->width;
-  int im_height = img_grayscale->height;
-  unsigned char* data = new unsigned char[im_width * im_height];
-  unsigned char* data_ptr = data;
-  unsigned char* image_data_ptr = (unsigned char*)img_grayscale->imageData;
-  int h = 0;
-  for (h = 0; h < im_height; h++) {
-    memcpy(data_ptr, image_data_ptr, im_width);
-    data_ptr += im_width;
-    image_data_ptr += img_grayscale->widthStep;
-  }
 
-  seeta::ImageData image_data;
-  image_data.data = data;
-  image_data.width = im_width;
-  image_data.height = im_height;
-  image_data.num_channels = 1;
+  seeta::ImageData img_data;
+  img_data.data = img_gray.data;
+  img_data.width = img_gray.cols;
+  img_data.height = img_gray.rows;
+  img_data.num_channels = 1;
 
   // Detect faces
-  std::vector<seeta::FaceInfo> faces = detector.Detect(image_data);
-  int32_t face_num = static_cast<int32_t>(faces.size());
-
-  if (face_num == 0)
-  {
-    delete[]data;
-    cvReleaseImage(&img_grayscale);
-    cvReleaseImage(&img_color);
-    return 0;
+  std::vector<seeta::FaceInfo> faces = detector.Detect(img_data);
+  if (faces.empty()) {
+    return -2;
   }
 
-  // Detect 5 facial landmarks
-  seeta::FacialLandmark points[5];
-  point_detector.PointDetectLandmarks(image_data, faces[0], points);
+  for (auto face : faces) {
+    // Detect 5 facial landmarks
+    seeta::FacialLandmark points[5];
+    point_detector.PointDetectLandmarks(img_data, face, points);
 
-  // Visualize the results
-  cvRectangle(img_color, cvPoint(faces[0].bbox.x, faces[0].bbox.y), cvPoint(faces[0].bbox.x + faces[0].bbox.width - 1, faces[0].bbox.y + faces[0].bbox.height - 1), CV_RGB(255, 0, 0));
-  for (int i = 0; i<pts_num; i++)
-  {
-    cvCircle(img_color, cvPoint(points[i].x, points[i].y), 2, CV_RGB(0, 255, 0), CV_FILLED);
+    // Visualize the results
+    cv::RotatedRect rrect = cv::RotatedRect(cv::Point(face.bbox.x + face.bbox.width / 2, face.bbox.y + face.bbox.height / 2), cv::Size(face.bbox.width, face.bbox.height), atan((points[1].y - points[0].y) / (points[1].x - points[0].x)) * 180 / PI);
+    cv::Point2f vertices[4];
+    rrect.points(vertices);
+    for (int i = 0; i < 4; i++)
+      cv::line(img, vertices[i], vertices[(i + 1) % 4], CV_RGB(255, 0, 0), 2, CV_AA);
+
+    for (int i = 0; i < pts_num; i++)
+    {
+      cv::circle(img, cvPoint(points[i].x, points[i].y), 2, CV_RGB(0, 255, 0), CV_FILLED);
+    }
   }
-  cvSaveImage("result.jpg", img_color);
+  
+  // Show crop face
+  cv::imshow("Alignment Face", img);
+  cv::waitKey(0);
+  cv::destroyWindow("Source Face");
 
-  // Release memory
-  cvReleaseImage(&img_color);
-  cvReleaseImage(&img_grayscale);
-  delete[]data;
   return 0;
 }

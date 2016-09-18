@@ -46,7 +46,7 @@ class FaceAlignment{
   *  @param model_path Path of the model file, either absolute or relative to
   *  the working directory.
   */
-  SEETA_API FaceAlignment(const char* model_path = NULL);
+  SEETA_API FaceAlignment(const char* model_path = nullptr);
 
   /** A Destructor which should never be called explicitly.
   *  Release all dynamically allocated resources.

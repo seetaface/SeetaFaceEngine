@@ -18,10 +18,42 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\FaceDetection\include\classifier.h" />
+    <ClInclude Include="..\..\FaceDetection\include\classifier\lab_boosted_classifier.h" />
+    <ClInclude Include="..\..\FaceDetection\include\classifier\mlp.h" />
+    <ClInclude Include="..\..\FaceDetection\include\classifier\surf_mlp.h" />
+    <ClInclude Include="..\..\FaceDetection\include\common.h" />
+    <ClInclude Include="..\..\FaceDetection\include\detector.h" />
+    <ClInclude Include="..\..\FaceDetection\include\face_detection.h" />
+    <ClInclude Include="..\..\FaceDetection\include\feature_map.h" />
+    <ClInclude Include="..\..\FaceDetection\include\feat\lab_feature_map.h" />
+    <ClInclude Include="..\..\FaceDetection\include\feat\surf_feature_map.h" />
+    <ClInclude Include="..\..\FaceDetection\include\fust.h" />
+    <ClInclude Include="..\..\FaceDetection\include\io\lab_boost_model_reader.h" />
+    <ClInclude Include="..\..\FaceDetection\include\io\surf_mlp_model_reader.h" />
+    <ClInclude Include="..\..\FaceDetection\include\model_reader.h" />
+    <ClInclude Include="..\..\FaceDetection\include\util\image_pyramid.h" />
+    <ClInclude Include="..\..\FaceDetection\include\util\math_func.h" />
+    <ClInclude Include="..\..\FaceDetection\include\util\nms.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\FaceDetection\src\classifier\lab_boosted_classifier.cpp" />
+    <ClCompile Include="..\..\FaceDetection\src\classifier\mlp.cpp" />
+    <ClCompile Include="..\..\FaceDetection\src\classifier\surf_mlp.cpp" />
+    <ClCompile Include="..\..\FaceDetection\src\face_detection.cpp" />
+    <ClCompile Include="..\..\FaceDetection\src\feat\lab_feature_map.cpp" />
+    <ClCompile Include="..\..\FaceDetection\src\feat\surf_feature_map.cpp" />
+    <ClCompile Include="..\..\FaceDetection\src\fust.cpp" />
+    <ClCompile Include="..\..\FaceDetection\src\io\lab_boost_model_reader.cpp" />
+    <ClCompile Include="..\..\FaceDetection\src\io\surf_mlp_model_reader.cpp" />
+    <ClCompile Include="..\..\FaceDetection\src\util\image_pyramid.cpp" />
+    <ClCompile Include="..\..\FaceDetection\src\util\nms.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{7D4CC245-77B4-42A4-90AE-4137093D2A34}</ProjectGuid>
+    <ProjectGuid>{E8635CD2-3964-4B4B-AC3C-012C5ABF2FDE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Identification</RootNamespace>
+    <RootNamespace>Detection</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -68,19 +100,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\..\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\FaceDetection\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\..\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\FaceDetection\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\..\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\FaceDetection\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\..\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\FaceDetection\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -88,7 +120,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;IDENTIFICATION_EXPORTS;SEETA_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;DETECTION_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -102,7 +134,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;IDENTIFICATION_EXPORTS;SEETA_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;DETECTION_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -118,7 +150,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;IDENTIFICATION_EXPORTS;SEETA_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;DETECTION_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -136,7 +168,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;IDENTIFICATION_EXPORTS;SEETA_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;DETECTION_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -146,50 +178,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\bias_adder_net.cpp" />
-    <ClCompile Include="..\..\src\blob.cpp" />
-    <ClCompile Include="..\..\src\bn_net.cpp" />
-    <ClCompile Include="..\..\src\common_net.cpp" />
-    <ClCompile Include="..\..\src\conv_net.cpp" />
-    <ClCompile Include="..\..\src\eltwise_net.cpp" />
-    <ClCompile Include="..\..\src\inner_product_net.cpp" />
-    <ClCompile Include="..\..\src\log.cpp" />
-    <ClCompile Include="..\..\src\math_functions.cpp" />
-    <ClCompile Include="..\..\src\max_pooling_net.cpp" />
-    <ClCompile Include="..\..\src\net.cpp" />
-    <ClCompile Include="..\..\src\pad_net.cpp" />
-    <ClCompile Include="..\..\src\spatial_transform_net.cpp" />
-    <ClCompile Include="..\..\src\tform_maker_net.cpp" />
-    <ClCompile Include="..\..\tools\aligner.cpp" />
-    <ClCompile Include="..\..\tools\face_identification.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\src\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\include\aligner.h" />
-    <ClInclude Include="..\..\include\bias_adder_net.h" />
-    <ClInclude Include="..\..\include\blob.h" />
-    <ClInclude Include="..\..\include\bn_net.h" />
-    <ClInclude Include="..\..\include\common.h" />
-    <ClInclude Include="..\..\include\common_net.h" />
-    <ClInclude Include="..\..\include\conv_net.h" />
-    <ClInclude Include="..\..\include\eltwise_net.h" />
-    <ClInclude Include="..\..\include\face_identification.h" />
-    <ClInclude Include="..\..\include\hyper_param.h" />
-    <ClInclude Include="..\..\include\inner_product_net.h" />
-    <ClInclude Include="..\..\include\log.h" />
-    <ClInclude Include="..\..\include\math_functions.h" />
-    <ClInclude Include="..\..\include\max_pooling_net.h" />
-    <ClInclude Include="..\..\include\net.h" />
-    <ClInclude Include="..\..\include\net_factory.h" />
-    <ClInclude Include="..\..\include\pad_net.h" />
-    <ClInclude Include="..\..\include\recognizer.h" />
-    <ClInclude Include="..\..\include\spatial_transform_net.h" />
-    <ClInclude Include="..\..\include\tform_maker_net.h" />
-    <ClInclude Include="..\..\include\viplnet.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
