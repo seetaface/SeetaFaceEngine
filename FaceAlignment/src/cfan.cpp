@@ -32,6 +32,8 @@
 
 #include "cfan.h"
 
+using namespace std;
+
 /** A constructor.
   *  Initialize basic parameters.
   */
@@ -162,8 +164,8 @@ void CCFAN::FacialPointLocate(const unsigned char *gray_im, int im_width, int im
   int right_x = left_x + bbox_w - 1;
   int right_y = left_y + bbox_h - 1;
 
-  float extend_factor = 0.15;
-  float extend_revised_y = 0.0;
+  float extend_factor = 0.05;
+  float extend_revised_y = 0.05;
 
   /*Compute the extended region of the detected face*/
   int extend_lx = max(floor(left_x - extend_factor*bbox_w), 0);
