@@ -33,6 +33,7 @@
 #define SEETA_FD_FEAT_SURF_FEATURE_MAP_H_
 
 #include <cstdint>
+#include <cstring>
 #include <vector>
 
 #include "common.h"

@@ -94,7 +94,26 @@ int main(int argc, char** argv) {
   img_data.height = img_gray.rows;
   img_data.num_channels = 1;
 
+  long t0 = cv::getTickCount();
   std::vector<seeta::FaceInfo> faces = detector.Detect(img_data);
+  long t1 = cv::getTickCount();
+  double secs = (t1 - t0)/cv::getTickFrequency();
+
+  cout << "Detections takes " << secs << " seconds " << endl;
+#ifdef USE_OPENMP
+  cout << "OpenMP is used." << endl;
+#else
+  cout << "OpenMP is not used. " << endl;
+#endif
+
+#ifdef USE_SSE
+  cout << "SSE is used." << endl;
+#else
+  cout << "SSE is not used." << endl;
+#endif
+
+  cout << "Image size (wxh): " << img_data.width << "x" 
+      << img_data.height << endl;
 
   cv::Rect face_rect;
   int32_t num_face = static_cast<int32_t>(faces.size());
