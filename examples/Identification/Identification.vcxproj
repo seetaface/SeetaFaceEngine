@@ -19,32 +19,32 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E51A4702-C253-4E48-9510-E4D7C274DBEB}</ProjectGuid>
+    <ProjectGuid>{7D4CC245-77B4-42A4-90AE-4137093D2A34}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Tester</RootNamespace>
+    <RootNamespace>Identification</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -68,23 +68,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\..\include;D:\OpenSrcLib\opencv2411\build\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\OpenSrcLib\opencv2411\build\x86\vc12\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\FaceIdentification\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\..\include;D:\OpenSrcLib\opencv2411\build\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\OpenSrcLib\opencv2411\build\x64\vc12\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\FaceIdentification\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\..\include;D:\OpenSrcLib\opencv2411\build\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\OpenSrcLib\opencv2411\build\x86\vc12\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\FaceIdentification\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\..\include;D:\OpenSrcLib\opencv2411\build\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\OpenSrcLib\opencv2411\build\x64\vc12\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\FaceIdentification\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -92,11 +88,11 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;IDENTIFICATION_EXPORTS;SEETA_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -106,11 +102,11 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;IDENTIFICATION_EXPORTS;SEETA_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -122,11 +118,11 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;IDENTIFICATION_EXPORTS;SEETA_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
@@ -140,23 +136,59 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;IDENTIFICATION_EXPORTS;SEETA_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\test\test_face_recognizer.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\src\bias_adder_net.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\src\blob.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\src\bn_net.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\src\common_net.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\src\conv_net.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\src\eltwise_net.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\src\inner_product_net.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\src\log.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\src\math_functions.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\src\max_pooling_net.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\src\net.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\src\pad_net.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\src\spatial_transform_net.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\src\tform_maker_net.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\tools\aligner.cpp" />
+    <ClCompile Include="..\..\FaceIdentification\tools\face_identification.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Identification\Identification.vcxproj">
-      <Project>{7d4cc245-77b4-42a4-90ae-4137093d2a34}</Project>
-    </ProjectReference>
+    <Text Include="..\..\FaceIdentification\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\FaceIdentification\include\aligner.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\bias_adder_net.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\blob.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\bn_net.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\common.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\common_net.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\conv_net.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\eltwise_net.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\face_identification.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\hyper_param.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\inner_product_net.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\log.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\math_functions.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\max_pooling_net.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\net.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\net_factory.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\pad_net.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\recognizer.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\spatial_transform_net.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\tform_maker_net.h" />
+    <ClInclude Include="..\..\FaceIdentification\include\viplnet.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -87,11 +87,11 @@ using namespace seeta;
 #define EXPECT_EQ(a, b) if ((a) != (b)) std::cout << "ERROR: "
 
 #ifdef _WIN32
-std::string DATA_DIR = "../../data/";
-std::string MODEL_DIR = "../../model/";
+std::string DATA_DIR = "../../FaceIdentification/data/";
+std::string MODEL_DIR = "../../FaceIdentification/model/";
 #else
-std::string DATA_DIR = "./data/";
-std::string MODEL_DIR = "./model/";
+std::string DATA_DIR = "./FaceIdentification/data/";
+std::string MODEL_DIR = "./FaceIdentification/model/";
 #endif
 void TEST(FaceRecognizerTest, CropFace) {
   FaceIdentification face_recognizer((MODEL_DIR + "seeta_fr_v1.0.bin").c_str());
@@ -130,8 +130,10 @@ void TEST(FaceRecognizerTest, CropFace) {
     face_recognizer.CropFace(src_img_data, pt5, dst_img_data);
     count += clock() - start;
     // Show crop face
+    //    cv::imshow("Source Face", src_img);
     //    cv::imshow("Crop Face", dst_img);
     //    cv::waitKey(0);
+    //    cv::destroyWindow("Source Face");
     //    cv::destroyWindow("Crop Face");
   }
   ifs.close();

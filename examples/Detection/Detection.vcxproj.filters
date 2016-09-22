@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\classifier">
+      <UniqueIdentifier>{5d5d4036-dd20-4da8-b9f1-3eabf67f00ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\feat">
+      <UniqueIdentifier>{ab2dbe7a-7025-430a-b3ff-03c60acf25fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\io">
+      <UniqueIdentifier>{5d4e1321-82cf-4cb5-9734-d447e60be93c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\util">
+      <UniqueIdentifier>{3b3d0c08-ce6e-4355-ac84-0bf4dc7787ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\classifier">
+      <UniqueIdentifier>{a1bdc38e-f967-4509-9682-c95d507c2526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\feat">
+      <UniqueIdentifier>{910522b2-5357-457f-9f2d-6459752a921e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\io">
+      <UniqueIdentifier>{d31b53e4-e32d-4a64-a041-548aa1bd2666}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\util">
+      <UniqueIdentifier>{30141e70-5a7e-4f14-90de-a228a7b6afbd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\FaceDetection\include\classifier\lab_boosted_classifier.h">
+      <Filter>Header Files\classifier</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\classifier\mlp.h">
+      <Filter>Header Files\classifier</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\classifier\surf_mlp.h">
+      <Filter>Header Files\classifier</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\feat\lab_feature_map.h">
+      <Filter>Header Files\feat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\feat\surf_feature_map.h">
+      <Filter>Header Files\feat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\io\lab_boost_model_reader.h">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\io\surf_mlp_model_reader.h">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\util\image_pyramid.h">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\util\math_func.h">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\util\nms.h">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\classifier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\detector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\face_detection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\feature_map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\fust.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FaceDetection\include\model_reader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\FaceDetection\src\face_detection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FaceDetection\src\fust.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FaceDetection\src\classifier\lab_boosted_classifier.cpp">
+      <Filter>Source Files\classifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FaceDetection\src\classifier\mlp.cpp">
+      <Filter>Source Files\classifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FaceDetection\src\classifier\surf_mlp.cpp">
+      <Filter>Source Files\classifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FaceDetection\src\feat\lab_feature_map.cpp">
+      <Filter>Source Files\feat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FaceDetection\src\feat\surf_feature_map.cpp">
+      <Filter>Source Files\feat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FaceDetection\src\io\lab_boost_model_reader.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FaceDetection\src\io\surf_mlp_model_reader.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FaceDetection\src\util\image_pyramid.cpp">
+      <Filter>Source Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FaceDetection\src\util\nms.cpp">
+      <Filter>Source Files\util</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

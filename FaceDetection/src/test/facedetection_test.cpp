@@ -34,23 +34,42 @@
 #include <iostream>
 #include <string>
 
-#include "opencv2/highgui/highgui.hpp"
-#include "opencv2/imgproc/imgproc.hpp"
+#ifdef _WIN32
+#pragma once
+#include <opencv2/core/version.hpp>
+
+#define CV_VERSION_ID CVAUX_STR(CV_MAJOR_VERSION) CVAUX_STR(CV_MINOR_VERSION) \
+  CVAUX_STR(CV_SUBMINOR_VERSION)
+
+#ifdef _DEBUG
+#define cvLIB(name) "opencv_" name CV_VERSION_ID "d"
+#else
+#define cvLIB(name) "opencv_" name CV_VERSION_ID
+#endif //_DEBUG
+
+#pragma comment( lib, cvLIB("core") )
+#pragma comment( lib, cvLIB("imgproc") )
+#pragma comment( lib, cvLIB("highgui") )
+
+#endif //_WIN32
+
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 #include "face_detection.h"
 
-using namespace std;
+#ifdef _WIN32
+std::string MODEL_DIR = "../../FaceDetection/model/";
+#else
+std::string DATA_DIR = "../../../FaceDetection/data/";
+#endif
 
 int main(int argc, char** argv) {
-  if (argc < 3) {
-      cout << "Usage: " << argv[0]
-          << " image_path model_path"
-          << endl;
-      return -1;
+  const char* img_path = "test_image.jpg";
+  if (argc >= 2) {
+    img_path = argv[1];
   }
-
-  const char* img_path = argv[1];
-  seeta::FaceDetection detector(argv[2]);
+  seeta::FaceDetection detector((MODEL_DIR + "seeta_fd_frontal_v1.0.bin").c_str());
 
   detector.SetMinFaceSize(40);
   detector.SetScoreThresh(2.f);
@@ -58,6 +77,10 @@ int main(int argc, char** argv) {
   detector.SetWindowStep(4, 4);
 
   cv::Mat img = cv::imread(img_path, cv::IMREAD_UNCHANGED);
+  if (!img.data) {
+    std::cerr << "Could not open or find the image" << std::endl;
+    return -1;
+  }
   cv::Mat img_gray;
 
   if (img.channels() != 1)
