@@ -58,6 +58,20 @@ FacenessNet [2] | 80x80 | n/a | 20 FPS
 7. *(Optional) Enable OpenMP support: (Project) Properities -> Configuration Properties -> C/C++ -> Language -> Open MP Support (or ... C/C++ -> Language [Intel C++] -> OpenMP Support). Define `USE_OPENMP` macro if necessary.*
 8. Build.
 
+### How to Build in Linux
+- Build
+```shell
+mkdir build
+cd build
+cmake ..
+make -j${nproc}
+```
+
+- Run demo
+```shell
+./build/facedet_test image_file model/seeta_fd_frontal_v1.0.bin
+```
+
 ### How to run SeetaFace Detector
 
 The class for face detection is included in `seeta` namespace. To detect faces on an image, one should first

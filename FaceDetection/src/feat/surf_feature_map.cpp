@@ -29,6 +29,7 @@
  *
  */
 
+#include <cmath>
 #include "feat/surf_feature_map.h"
 
 namespace seeta {
@@ -222,6 +223,8 @@ void SURFFeatureMap::ComputeIntegralImages() {
 void SURFFeatureMap::MaskIntegralChannel() {
   const int32_t* grad_x = grad_x_.data();
   const int32_t* grad_y = grad_y_.data();
+  int32_t len = width_ * height_;
+#ifdef USE_SSE
   __m128i dx;
   __m128i dy;
   __m128i dx_mask;
@@ -231,7 +234,6 @@ void SURFFeatureMap::MaskIntegralChannel() {
   __m128i data;
   __m128i result;
   __m128i* src = reinterpret_cast<__m128i*>(int_img_.data());
-  int32_t len = width_ * height_;
 
   for (int32_t i = 0; i < len; i++) {
     dx = _mm_set1_epi32(*(grad_x++));
@@ -246,6 +248,32 @@ void SURFFeatureMap::MaskIntegralChannel() {
     result = _mm_and_si128(data, dx_mask);
     _mm_storeu_si128(src++, result);
   }
+#else
+  int32_t dx, dy, dx_mask, dy_mask, cmp;
+  int32_t xor_bits[] = {-1, -1, 0, 0};
+
+  int32_t* src = int_img_.data();
+  for (int32_t i = 0; i < len; i++) {
+      dy = *(grad_y++);
+      dx = *(grad_x++);
+      
+      cmp = dy < 0 ? 0xffffffff : 0x0;
+      for (int32_t j = 0; j < 4; j++) {
+          // cmp xor xor_bits
+          dy_mask = cmp ^ xor_bits[j];
+          *(src) = (*src) & dy_mask;
+          src++;
+      }
+      
+      cmp = dx < 0 ? 0xffffffff : 0x0;
+      for (int32_t j = 0; j < 4; j++) {
+          // cmp xor xor_bits
+          dx_mask = cmp ^ xor_bits[j];
+          *(src) = (*src) & dx_mask;
+          src++;
+      }
+  }
+#endif
 }
 
 void SURFFeatureMap::Integral() {
@@ -265,6 +293,7 @@ void SURFFeatureMap::Integral() {
 
 void SURFFeatureMap::VectorCumAdd(int32_t* x, int32_t len,
     int32_t num_channel) {
+#ifdef USE_SSE
   __m128i x1;
   __m128i y1;
   __m128i z1;
@@ -288,6 +317,14 @@ void SURFFeatureMap::VectorCumAdd(int32_t* x, int32_t len,
     _mm_storeu_si128(z2, z1);
     z2 = y2;
   }
+#else
+  int32_t cols = len / num_channel - 1;
+  for (int32_t i = 0; i < cols; i++) {
+    int32_t* col1 = x + i * num_channel;
+    int32_t* col2 = col1 + num_channel;
+    seeta::fd::MathFunction::VectorAdd(col1, col2, col2, num_channel);
+  }
+#endif
 }
 
 void SURFFeatureMap::ComputeFeatureVector(const SURFFeature & feat,

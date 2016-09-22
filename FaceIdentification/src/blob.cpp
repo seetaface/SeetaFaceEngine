@@ -126,7 +126,7 @@ void Blob::Permute(int dim1, int dim2, int dim3, int dim4) {
   for (int i = 0; i < 4; ++ i)
     shape_[i] = tmp_shape[i];
   memcpy(dat, tmp, sizeof(float) * count_);
-  delete tmp;
+  delete[] tmp;
 }
 
 void Blob::Release() {
