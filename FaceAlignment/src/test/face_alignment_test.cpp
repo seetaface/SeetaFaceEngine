@@ -40,27 +40,35 @@
 #include "face_detection.h"
 #include "face_alignment.h"
 
+#ifdef _WIN32
+std::string DATA_DIR = "../../data/";
+std::string MODEL_DIR = "../../model/";
+#else
+std::string DATA_DIR = "./data/";
+std::string MODEL_DIR = "./model/";
+#endif
+
 int main(int argc, char** argv)
 {
   // Initialize face detection model
-  seeta::FaceDetection detector("seeta_fd_frontal_v1.0.bin");
+  seeta::FaceDetection detector("../../../FaceDetection/model/seeta_fd_frontal_v1.0.bin");
   detector.SetMinFaceSize(40);
   detector.SetScoreThresh(2.f);
   detector.SetImagePyramidScaleFactor(0.8f);
   detector.SetWindowStep(4, 4);
 
   // Initialize face alignment model 
-  seeta::FaceAlignment point_detector("../model/seeta_fa_v1.1.bin");
+  seeta::FaceAlignment point_detector((MODEL_DIR + "seeta_fa_v1.1.bin").c_str());
 
   //load image
   IplImage *img_grayscale = NULL;
-  img_grayscale = cvLoadImage("../data/image_0001.png", 0);
+  img_grayscale = cvLoadImage((DATA_DIR + "image_0001.png").c_str(), 0);
   if (img_grayscale == NULL)
   {
     return 0;
   }
 
-  IplImage *img_color = cvLoadImage("../data/image_0001.png", 1);
+  IplImage *img_color = cvLoadImage((DATA_DIR + "image_0001.png").c_str(), 1);
   int pts_num = 5;
   int im_width = img_grayscale->width;
   int im_height = img_grayscale->height;
