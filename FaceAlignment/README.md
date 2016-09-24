@@ -33,6 +33,8 @@ As for speed, it takes about 5 milliseconds per face to predict the 5 facial poi
 5. Define `SEETA_EXPORTS` macro: (Project) Properities -> Configuration Properties -> C/C++ -> Preprocessor -> Preprocessor Definitions.
 6. Build.
 
+A Visual Studio 2013 solution is provided in the subdirectory [examples].(./examples)
+
 ### Build in Linux
 
 ``` 
