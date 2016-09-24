@@ -58,7 +58,7 @@ FacenessNet [2] | 80x80 | n/a | 20 FPS
 7. *(Optional) Enable OpenMP support: (Project) Properities -> Configuration Properties -> C/C++ -> Language -> Open MP Support (or ... C/C++ -> Language [Intel C++] -> OpenMP Support). Define `USE_OPENMP` macro if necessary.*
 8. Build.
 
-A Visual Studio 2013 solution is provided in the subdirectory [examples].(./examples)
+**A Visual Studio 2013 solution is provided in the subdirectory [examples](./examples).**
 
 ### How to Build in Linux
 - Build
