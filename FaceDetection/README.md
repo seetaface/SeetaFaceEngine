@@ -123,6 +123,8 @@ If you find SeetaFace Detection (FuSt) useful in your research work, please cons
       Title = {Funnel-Structured Cascade for Multi-View Face Detection with Alignment-Awareness},
       Year = {2016}
     }
+    
+The arXiv preprint of the paper can be found at [http://arxiv.org/abs/1609.07304](http://arxiv.org/abs/1609.07304).
 
 ### License
 
