@@ -14,6 +14,19 @@
 
 This face recognition engine is developed by Visual Information Processing and Learning (VIPL) group, Institute of Computing Technology, Chinese Academy of Sciences. The codes are written in C++ without dependence on any 3rd-party libraries. The open source is now released under BSD-2 license (see [LICENSE](LICENSE) for details), which means the codes can be used freely for both acedemic purpose and industrial products.
 
+### Compile
+
+#### Linux & Mac OS
+
+Change current working directory to `SeetaFaceEngine` and run the following command:
+
+``` 
+mkdir build
+cd build
+cmake .. && make
+```
+
+
 ### Contact Info
 
 If you have any problem on SeetaFace Engine, please contact us by sending email to SeetaFace@vipl.ict.ac.cn.

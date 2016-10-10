@@ -65,3 +65,10 @@ if (BUILD_EXAMPLES)
         target_link_libraries(facedet_test ${facedet_required_libs})
     endif()
 endif()
+
+# Expose B's public includes (including Boost transitively) to other
+# subprojects through cache variable.
+# Reference: http://stackoverflow.com/questions/16398937
+set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include
+                                 ${OpenCV_INCLUDE_DIRS}
+    CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
