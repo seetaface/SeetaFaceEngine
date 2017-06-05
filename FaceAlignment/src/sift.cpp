@@ -392,10 +392,9 @@ void SIFT::ImageOrientation(double* gray_im, double* image_orientation)
 		  double tmp1 = im_cos_theta[pt] * cos_array[index] + im_sin_theta[pt] * sin_array[index];
 		  double tmp = pow(tmp1,3);
 
-		  if (tmp > 0)
-			  tmp = tmp;
-		  else
+		  if (tmp < 0)
 			  tmp = 0;
+ 
 		  image_orientation[index * param.image_pixel + pt] = tmp * im_magnitude[pt];
 	  }
   }
