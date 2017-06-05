@@ -106,7 +106,7 @@ CCFAN::~CCFAN(void)
 void CCFAN::InitModel(const char *model_path)
 {
   /*Open the model file*/
-  FILE *fp = fopen(model_path, "rb+");
+  FILE *fp = fopen(model_path, "rb");
   mean_shape_ = new float[pts_num_ * 2];
   fread(mean_shape_, sizeof(float), pts_num_ * 2, fp);
 
