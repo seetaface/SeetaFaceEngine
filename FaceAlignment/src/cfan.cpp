@@ -33,6 +33,8 @@
 #include "cfan.h"
 #include <string.h>
 #include <algorithm>
+#include <math.h>
+#include <cstdlib>
 /** A constructor.
   *  Initialize basic parameters.
   */

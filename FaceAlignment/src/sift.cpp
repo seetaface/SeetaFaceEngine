@@ -32,7 +32,7 @@
 
 #include "sift.h"
 #include <string.h>
-
+#include <cmath>
 #define pi 3.1415926
 double SIFT::delta_gauss_x[25] = 
 {0.0284161904936934,0.0260724940559495,0,-0.0260724940559495,-0.0284161904936934,
@@ -226,7 +226,7 @@ void SIFT::ConvImage(double* image_orientation, double* conv_im)
 
   for(int k = 0; k < param.patch_size; k++)
   {
-	  weight[k] = abs(k - double(param.patch_size - 1)/2)/(param.sample_pixel);
+	  weight[k] = fabs(k - double(param.patch_size - 1)/2)/(param.sample_pixel);
 
 	  if(weight[k] <= 1)
 		  weight[k] = 1 - weight[k];
