@@ -59,7 +59,7 @@ class MathFunction {
     const __m128i* y2 = reinterpret_cast<const __m128i*>(y);
     __m128i* z2 = reinterpret_cast<__m128i*>(z);
 
-    for (i = 0; i < len - 4; i += 4) {
+    for (i = 0; i <= len - 4; i += 4) {
       x1 = _mm_loadu_si128(x2++);
       y1 = _mm_loadu_si128(y2++);
       _mm_storeu_si128(z2++, _mm_add_epi32(x1, y1));
@@ -82,7 +82,7 @@ class MathFunction {
     const __m128i* y2 = reinterpret_cast<const __m128i*>(y);
     __m128i* z2 = reinterpret_cast<__m128i*>(z);
 
-    for (i = 0; i < len - 4; i += 4) {
+    for (i = 0; i <= len - 4; i += 4) {
       x1 = _mm_loadu_si128(x2++);
       y1 = _mm_loadu_si128(y2++);
 
@@ -104,7 +104,7 @@ class MathFunction {
     const __m128i* x = reinterpret_cast<const __m128i*>(src);
     __m128i* y = reinterpret_cast<__m128i*>(dest);
 
-    for (i = 0; i < len - 4; i += 4) {
+    for (i = 0; i <= len - 4; i += 4) {
       val = _mm_loadu_si128(x++);
       val_abs = _mm_abs_epi32(val);
       _mm_storeu_si128(y++, val_abs);
@@ -124,7 +124,7 @@ class MathFunction {
     const __m128i* x2 = reinterpret_cast<const __m128i*>(src);
     __m128i* y2 = reinterpret_cast<__m128i*>(dest);
 
-    for (i = 0; i < len - 4; i += 4) {
+    for (i = 0; i <= len - 4; i += 4) {
       x1 = _mm_loadu_si128(x2++);
       _mm_storeu_si128(y2++, _mm_mullo_epi32(x1, x1));
     }
@@ -146,7 +146,7 @@ class MathFunction {
     __m128 z1 = _mm_setzero_ps();
     float buf[4];
 
-    for (i = 0; i < len - 4; i += 4) {
+    for (i = 0; i <= len - 4; i += 4) {
       x1 = _mm_loadu_ps(x + i);
       y1 = _mm_loadu_ps(y + i);
       z1 = _mm_add_ps(z1, _mm_mul_ps(x1, y1));
