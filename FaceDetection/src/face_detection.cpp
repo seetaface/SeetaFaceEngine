@@ -98,12 +98,20 @@ std::vector<seeta::FaceInfo> FaceDetection::Detect(
 
   impl_->pos_wnds_ = impl_->detector_->Detect(&(impl_->img_pyramid_));
 
+#if 0
   for (int32_t i = 0; i < impl_->pos_wnds_.size(); i++) {
     if (impl_->pos_wnds_[i].score < impl_->cls_thresh_) {
       impl_->pos_wnds_.resize(i);
       break;
     }
   }
+#else
+  for (int32_t i = impl_->pos_wnds_.size()-1; i >= 0; i--) {
+    if (impl_->pos_wnds_[i].score < impl_->cls_thresh_) {
+      impl_->pos_wnds_.erase(impl_->pos_wnds_.begin()+i);
+    }
+  }
+#endif
 
   return impl_->pos_wnds_;
 }

@@ -46,7 +46,7 @@ float simd_dot(const float* x, const float* y, const long& len) {
   float temp[4];
 
   long i;
-  for (i = 0; i + 4 < len; i += 4) {
+  for (i = 0; i <= len - 4; i += 4) {
       X = _mm_loadu_ps(x + i); // load chunk of 4 floats
       Y = _mm_loadu_ps(y + i);
       acc = _mm_add_ps(acc, _mm_mul_ps(X, Y));
