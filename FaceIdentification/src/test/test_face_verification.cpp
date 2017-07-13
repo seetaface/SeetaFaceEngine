@@ -82,8 +82,10 @@ using namespace seeta;
 #define EXPECT_EQ(a, b) if ((a) != (b)) std::cout << "ERROR: "
 
 #ifdef _WIN32
-std::string DATA_DIR = "../../data/";
-std::string MODEL_DIR = "../../model/";
+std::string DATA_DIR = "../../FaceIdentification/data/";
+std::string IDENTIFICATION_MODEL_DIR = "../../FaceIdentification/model/";
+std::string DETECTION_MODEL_DIR = "../../FaceDetection/model/";
+std::string ALIENMENT_MODEL_DIR = "../../FaceAlignment/model/";
 #else
 std::string DATA_DIR = "./data/";
 std::string MODEL_DIR = "./model/";
@@ -92,25 +94,28 @@ std::string MODEL_DIR = "./model/";
 
 int main(int argc, char* argv[]) {
   // Initialize face detection model
-  seeta::FaceDetection detector("seeta_fd_frontal_v1.0.bin");
+  seeta::FaceDetection detector((DETECTION_MODEL_DIR + "seeta_fd_frontal_v1.0.bin").c_str());
   detector.SetMinFaceSize(40);
   detector.SetScoreThresh(2.f);
   detector.SetImagePyramidScaleFactor(0.8f);
   detector.SetWindowStep(4, 4);
 
   // Initialize face alignment model 
-  seeta::FaceAlignment point_detector("seeta_fa_v1.1.bin");
+  //seeta::FaceAlignment point_detector("seeta_fa_v1.1.bin");
+  seeta::FaceAlignment point_detector((ALIENMENT_MODEL_DIR + "seeta_fa_v1.1.bin").c_str());
 
   // Initialize face Identification model 
-  FaceIdentification face_recognizer((MODEL_DIR + "seeta_fr_v1.0.bin").c_str());
+  FaceIdentification face_recognizer((IDENTIFICATION_MODEL_DIR + "seeta_fr_v1.0.bin").c_str());
   std::string test_dir = DATA_DIR + "test_face_recognizer/";
 
   //load image
   cv::Mat gallery_img_color = cv::imread(test_dir + "images/compare_im/Aaron_Peirsol_0001.jpg", 1);
+  EXPECT_NE(gallery_img_color.data, nullptr) << "Load image error!";
   cv::Mat gallery_img_gray;
   cv::cvtColor(gallery_img_color, gallery_img_gray, CV_BGR2GRAY);
 
   cv::Mat probe_img_color = cv::imread(test_dir + "images/compare_im/Aaron_Peirsol_0004.jpg", 1);
+  EXPECT_NE(probe_img_color.data, nullptr) << "Load image error!";
   cv::Mat probe_img_gray;
   cv::cvtColor(probe_img_color, probe_img_gray, CV_BGR2GRAY);
 
@@ -149,9 +154,9 @@ int main(int argc, char* argv[]) {
   for (int i = 0; i<5; i++)
   {
     cv::circle(gallery_img_color, cv::Point(gallery_points[i].x, gallery_points[i].y), 2,
-      CV_RGB(0, 255, 0));
+		CV_RGB(0, 255, 0));
     cv::circle(probe_img_color, cv::Point(probe_points[i].x, probe_points[i].y), 2,
-      CV_RGB(0, 255, 0));
+		CV_RGB(0, 255, 0));
   }
   cv::imwrite("gallery_point_result.jpg", gallery_img_color);
   cv::imwrite("probe_point_result.jpg", probe_img_color);
