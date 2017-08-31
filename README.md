@@ -17,7 +17,7 @@ This face recognition engine is developed by Visual Information Processing and L
 ### Contact Info
 
 If you have any problem on SeetaFace Engine, please contact us by sending email to SeetaFace@vipl.ict.ac.cn.
-If Seetaface can not meet your business needs, please contact **business@seetatech.com for business** cooperation. For more AI services, please visit SeetaTech official website: http£º//www.seetatech.com.
+If Seetaface can not meet your business needs, please contact business@seetatech.com for business cooperation. For more AI services, please visit SeetaTech official website: http://www.seetatech.com.
 
 SeetaTech is a start-up company with the focus on computer vision technology, whose founding team comes from Visual Information Processing and Learning research group(VIPL), Chinese Academic of Science. We have always been adhering to the development principle of ¡°open source striving to develop AI¡±, promoting the rapid integration of Artificial Intelligence and other industries.
 
