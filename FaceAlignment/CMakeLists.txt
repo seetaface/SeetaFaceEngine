@@ -15,7 +15,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse4.1")
 
-include_directories(include)
+include_directories(include ${seeta_facedet_lib_INCLUDE_DIRS})
 
 set(src_files 
     src/cfan.cpp
@@ -39,3 +39,10 @@ if (BUILD_EXAMPLES)
         target_link_libraries(fa_test ${fa_required_libs})
     endif()
 endif()
+
+# Expose B's public includes (including Boost transitively) to other
+# subprojects through cache variable.
+# Reference: http://stackoverflow.com/questions/16398937
+set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include
+                                 ${seeta_facedet_lib_INCLUDE_DIRS}
+    CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
