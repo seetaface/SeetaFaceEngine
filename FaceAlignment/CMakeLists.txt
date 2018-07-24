@@ -24,16 +24,21 @@ set(src_files
     )
 
 add_library(seeta_fa_lib SHARED ${src_files})
-set(fa_required_libs seeta_fa_lib)
+
+# Install target
+INSTALL(TARGETS ${PROJECT_NAME}
+        LIBRARY DESTINATION "."
+        ARCHIVE DESTINATION ".")
 
 if (BUILD_EXAMPLES)
+    set(fa_required_libs seeta_fa_lib)
     message(STATUS "Build with examples.")
     find_package(OpenCV)
     if (NOT OpenCV_FOUND)
         message(WARNING "OpenCV not found. Test will not be built.")
     else()
         include_directories(${OpenCV_INCLUDE_DIRS} build)
-	link_directories(build)
+	    link_directories(build)
         list(APPEND fa_required_libs ${OpenCV_LIBS} seeta_facedet_lib)
         add_executable(fa_test src/test/face_alignment_test.cpp)
         target_link_libraries(fa_test ${fa_required_libs})

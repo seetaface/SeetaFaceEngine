@@ -10,5 +10,6 @@ foreach (f ${SRC_LIST})
   string(REGEX REPLACE "[.]cpp" ".bin" BIN ${f})
   add_executable(${BIN} ${f})
   target_link_libraries(${BIN} viplnet ${OpenCV_LIBS})
+  add_dependencies(${BIN} seeta_facedet_lib seeta_fa_lib)
 endforeach ()
 

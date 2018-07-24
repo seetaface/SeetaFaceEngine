@@ -53,6 +53,13 @@ set(src_files
 add_library(seeta_facedet_lib SHARED ${src_files})
 set(facedet_required_libs seeta_facedet_lib)
 
+# Install target
+INSTALL(TARGETS ${PROJECT_NAME}
+        LIBRARY DESTINATION "."
+        ARCHIVE DESTINATION ".")
+# Install head files
+INSTALL(DIRECTORY include DESTINATION ".")
+
 # Build examples
 if (BUILD_EXAMPLES)
     message(STATUS "Build with examples.")
