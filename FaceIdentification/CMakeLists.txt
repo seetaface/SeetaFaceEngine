@@ -35,7 +35,7 @@ set_target_properties(viplnet PROPERTIES
 
 # Install target
 INSTALL(TARGETS ${PROJECT_NAME}
-        LIBRARY DESTINATION "."
-        ARCHIVE DESTINATION ".")
+        LIBRARY DESTINATION "lib"
+        ARCHIVE DESTINATION "lib")
 # Install head files
 INSTALL(DIRECTORY include DESTINATION ".")

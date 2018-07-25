@@ -36,6 +36,6 @@ IF(MSVC)
         ENDIF(WIN32_USE_MP)
 ENDIF(MSVC)
 
-add_subdirectory(FaceAlignment)
 add_subdirectory(FaceDetection)
-add_subdirectory(FaceIdentification)
+add_subdirectory(FaceAlignment)
+#add_subdirectory(FaceIdentification)
