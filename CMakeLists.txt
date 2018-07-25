@@ -38,4 +38,4 @@ ENDIF(MSVC)
 
 add_subdirectory(FaceDetection)
 add_subdirectory(FaceAlignment)
-#add_subdirectory(FaceIdentification)
+add_subdirectory(FaceIdentification)
