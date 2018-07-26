@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 2.8.12)
 
+set (SEETAFACEENGINE_VERSION_MAJOR 4)
+set (SEETAFACEENGINE_VERSION_MINOR 5)
+set (SEETAFACEENGINE_VERSION_PATCH 0)
+
 # 建立要删除的文件
 CONFIGURE_FILE(
     "${CMAKE_SOURCE_DIR}/cmake_uninstall.cmake.in"
@@ -39,3 +43,7 @@ ENDIF(MSVC)
 add_subdirectory(FaceDetection)
 add_subdirectory(FaceAlignment)
 add_subdirectory(FaceIdentification)
+
+# Install cmake files
+configure_file(SeetaFaceEngineConfig.cmake.in ${CMAKE_BINARY_DIR}/SeetaFaceEngineConfig.cmake @ONLY)
+install(FILES ${CMAKE_BINARY_DIR}/SeetaFaceEngineConfig.cmake DESTINATION .)

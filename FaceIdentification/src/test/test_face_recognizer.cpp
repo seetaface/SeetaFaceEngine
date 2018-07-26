@@ -42,12 +42,8 @@ using namespace std;
 
 #endif //__unix
 
-
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
-#include <opencv2/imgproc.hpp>
-#include <opencv2/imgproc.hpp>
-#include <opencv2/imgcodecs.hpp>
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
 
 #include "face_identification.h"
 #include "common.h"
@@ -71,20 +67,20 @@ using namespace seeta;
 #define EXPECT_EQ(a, b) if ((a) != (b)) std::cout << "ERROR: "
 
 #ifdef _WIN32
-std::string DATA_DIR = "../../data/";
-std::string MODEL_DIR = "../../model/";
+std::string gszDataDir = "../../data/";
+std::string gszModelDir = "../../model/";
 #else
-std::string DATA_DIR = "./data/";
-std::string MODEL_DIR = "./model/";
+std::string gszDataDir = "./data/";
+std::string gszModelDir = "./model/";
 #endif
 void TEST(FaceRecognizerTest, CropFace) {
-	FaceIdentification face_recognizer((MODEL_DIR + "seeta_fr_v1.0.bin").c_str());
-	std::string test_dir = DATA_DIR + "test_face_recognizer/";
+	FaceIdentification face_recognizer((gszModelDir + "/seeta_fr_v1.0.bin").c_str());
+	std::string test_dir = gszDataDir + "/test_face_recognizer/";
 	/* data initialize */
 	std::ifstream ifs;
 	std::string img_name;
 	FacialLandmark pt5[5];
-	ifs.open(test_dir + "test_file_list.txt", std::ifstream::in);
+	ifs.open(test_dir + "/test_file_list.txt", std::ifstream::in);
 	clock_t start, count = 0;
 	int img_num = 0;
 	while (ifs >> img_name) {
@@ -114,9 +110,11 @@ void TEST(FaceRecognizerTest, CropFace) {
 		face_recognizer.CropFace(src_img_data, pt5, dst_img_data);
 		count += clock() - start;
 		// Show crop face
-		//    cv::imshow("Crop Face", dst_img);
-		//    cv::waitKey(0);
-		//    cv::destroyWindow("Crop Face");
+		/*
+		   cv::imshow("Source Face", src_img);
+		   cv::imshow("Crop Face", dst_img);
+		   cv::waitKey(0);
+		   cv::destroyWindow("Crop Face");//*/
 	}
 	ifs.close();
 	std::cout << "Test successful! \nAverage crop face time: "
@@ -124,8 +122,8 @@ void TEST(FaceRecognizerTest, CropFace) {
 }
 
 void TEST(FaceRecognizerTest, ExtractFeature) {
-	FaceIdentification face_recognizer((MODEL_DIR + "seeta_fr_v1.0.bin").c_str());
-	std::string test_dir = DATA_DIR + "test_face_recognizer/";
+	FaceIdentification face_recognizer((gszModelDir + "/seeta_fr_v1.0.bin").c_str());
+	std::string test_dir = gszDataDir + "/test_face_recognizer/";
 
 	int feat_size = face_recognizer.feature_size();
 	EXPECT_EQ(feat_size, 2048);
@@ -133,7 +131,7 @@ void TEST(FaceRecognizerTest, ExtractFeature) {
 	FILE* feat_file = NULL;
 
 	// Load features extract from caffe
-	fopen_s(&feat_file, (test_dir + "feats.dat").c_str(), "rb");
+	fopen_s(&feat_file, (test_dir + "/feats.dat").c_str(), "rb");
 	int n, c, h, w;
 	EXPECT_EQ(fread(&n, sizeof(int), 1, feat_file), (unsigned int)1);
 	EXPECT_EQ(fread(&c, sizeof(int), 1, feat_file), (unsigned int)1);
@@ -148,7 +146,7 @@ void TEST(FaceRecognizerTest, ExtractFeature) {
 	int cnt = 0;
 
 	/* Data initialize */
-	std::ifstream ifs(test_dir + "crop_file_list.txt");
+	std::ifstream ifs(test_dir + "/crop_file_list.txt");
 	std::string img_name;
 
 	clock_t start, count = 0;
@@ -192,8 +190,8 @@ void TEST(FaceRecognizerTest, ExtractFeature) {
 }
 
 void TEST(FaceRecognizerTest, ExtractFeatureWithCrop) {
-	FaceIdentification face_recognizer((MODEL_DIR + "seeta_fr_v1.0.bin").c_str());
-	std::string test_dir = DATA_DIR + "test_face_recognizer/";
+	FaceIdentification face_recognizer((gszModelDir + "/seeta_fr_v1.0.bin").c_str());
+	std::string test_dir = gszDataDir + "/test_face_recognizer/";
 
 	int feat_size = face_recognizer.feature_size();
 	EXPECT_EQ(feat_size, 2048);
@@ -201,7 +199,7 @@ void TEST(FaceRecognizerTest, ExtractFeatureWithCrop) {
 	FILE* feat_file = NULL;
 
 	// Load features extract from caffe
-	fopen_s(&feat_file, (test_dir + "feats.dat").c_str(), "rb");
+	fopen_s(&feat_file, (test_dir + "/feats.dat").c_str(), "rb");
 	int n, c, h, w;
 	EXPECT_EQ(fread(&n, sizeof(int), 1, feat_file), (unsigned int)1);
 	EXPECT_EQ(fread(&c, sizeof(int), 1, feat_file), (unsigned int)1);
@@ -216,7 +214,7 @@ void TEST(FaceRecognizerTest, ExtractFeatureWithCrop) {
 	int cnt = 0;
 
 	/* Data initialize */
-	std::ifstream ifs(test_dir + "test_file_list.txt");
+	std::ifstream ifs(test_dir + "/test_file_list.txt");
 	std::string img_name;
 	FacialLandmark pt5[5];
 
@@ -265,6 +263,16 @@ void TEST(FaceRecognizerTest, ExtractFeatureWithCrop) {
 }
 
 int main(int argc, char* argv[]) {
+	if (argc < 2) {
+		std::cout << "Usage: " << argv[0]
+			<< " model_path data_path"
+			<< std::endl;
+		return -1;
+	}
+
+	gszModelDir = argv[1];
+	gszDataDir = argv[2];
+
 	TEST(FaceRecognizerTest, CropFace);
 	TEST(FaceRecognizerTest, ExtractFeature);
 	TEST(FaceRecognizerTest, ExtractFeatureWithCrop);

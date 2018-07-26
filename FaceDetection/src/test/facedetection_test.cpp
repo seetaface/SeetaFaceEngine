@@ -44,13 +44,13 @@ using namespace std;
 int main(int argc, char** argv) {
 	if (argc < 3) {
 		cout << "Usage: " << argv[0]
-			<< " image_path model_path"
+			<< " model_path image_path"
 			<< endl;
 		return -1;
 	}
 
-	const char* img_path = argv[1];
-	seeta::FaceDetection detector(argv[2]);
+	const char* img_path = argv[2];
+	seeta::FaceDetection detector(argv[1]);
 
 	detector.SetMinFaceSize(40);
 	detector.SetScoreThresh(2.f);

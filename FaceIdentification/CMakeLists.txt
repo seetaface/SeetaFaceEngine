@@ -3,10 +3,7 @@ cmake_minimum_required (VERSION 2.6)
 project (viplnet)
 
 # Build options
-option(BUILD_EXAMPLES  "Set to ON to build examples"  ON)
-
-set (VIPLNET_VERSION_MAJOR 4)
-set (VIPLNET_VERSION_MINOR 5)
+option(BUILD_EXAMPLES "Set to ON to build examples" OFF)
 
 set(CMAKE_BUILD_TYPE "Release")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -g -ggdb")
@@ -53,27 +50,37 @@ set_target_properties(viplnet PROPERTIES
 
 # Install target
 INSTALL(TARGETS ${PROJECT_NAME}
+		RUNTIME DESTINATION bin
         LIBRARY DESTINATION "lib"
         ARCHIVE DESTINATION "lib")
 # Install head files
 INSTALL(DIRECTORY include DESTINATION ".")
+# Install model files
+INSTALL(DIRECTORY model DESTINATION ".")
 
 if (BUILD_EXAMPLES)
-    set(viplnet_required_libs viplnet)
-	
     message(STATUS "Build with examples.")
     find_package(OpenCV)
     if (NOT OpenCV_FOUND)
-        message(WARNING "OpenCV not found. Test will not be built.")
-    else()
-        include_directories(${OpenCV_INCLUDE_DIRS} ../FaceDetection/include ../FaceAlignment/include)
-	    
-        list(APPEND viplnet_required_libs ${OpenCV_LIBS} viplnet seeta_fa_lib seeta_facedet_lib)
-        
-		add_executable(test_face_recognizer src/test/test_face_recognizer.cpp)
-        target_link_libraries(test_face_recognizer ${viplnet_required_libs})
-		
-		add_executable(test_face_verification src/test/test_face_verification.cpp)
-        target_link_libraries(test_face_verification ${viplnet_required_libs})
+        message(FATAL_ERROR "OpenCV not found. Test will not be built.")
     endif()
+
+	find_package(SeetaFaceEngine)
+	if(NOT SEETAFACEENGINE_FOUND)
+		message(FATAL_ERROR "Please set BUILD_EXAMPLES to OFF and isntall SeetaFaceEngine")
+	endif()
+
+	include_directories(${OpenCV_INCLUDE_DIRS} ${SEETAFACEENGINE_INCLUDE_DIRS})
+	list(APPEND viplnet_required_libs ${OpenCV_LIBS} ${SEETAFACEENGINE_LIBRARIES})
+
+	add_executable(test_face_recognizer src/test/test_face_recognizer.cpp)
+    target_link_libraries(test_face_recognizer ${viplnet_required_libs})
+
+	add_executable(test_face_verification src/test/test_face_verification.cpp)
+    target_link_libraries(test_face_verification ${viplnet_required_libs})
+
+	# Install target
+	INSTALL(TARGETS test_face_recognizer test_face_verification RUNTIME DESTINATION bin)
+	# Install example data
+	INSTALL(DIRECTORY data DESTINATION ".")
 endif()

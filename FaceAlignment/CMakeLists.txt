@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8.4)
 project(seeta_fa_lib)
 
 # Build options
-option(BUILD_EXAMPLES  "Set to ON to build examples"  ON)
+option(BUILD_EXAMPLES  "Set to ON to build examples"  OFF)
 
 # Use C++11
 #set(CMAKE_CXX_STANDARD 11)
@@ -27,21 +27,33 @@ add_library(seeta_fa_lib SHARED ${src_files})
 
 # Install target
 INSTALL(TARGETS ${PROJECT_NAME}
+		RUNTIME DESTINATION bin
         LIBRARY DESTINATION "lib"
         ARCHIVE DESTINATION "lib")
+# Install head files
+INSTALL(DIRECTORY include DESTINATION ".")
+# Install model files
+INSTALL(DIRECTORY model DESTINATION ".")
 
 if (BUILD_EXAMPLES)
-    set(fa_required_libs seeta_fa_lib)
-	
     message(STATUS "Build with examples.")
     find_package(OpenCV)
     if (NOT OpenCV_FOUND)
-        message(WARNING "OpenCV not found. Test will not be built.")
-    else()
-        include_directories(${OpenCV_INCLUDE_DIRS} ../FaceDetection/include)
-        list(APPEND fa_required_libs ${OpenCV_LIBS} seeta_facedet_lib)
-        add_executable(fa_test src/test/face_alignment_test.cpp)
-        target_link_libraries(fa_test ${fa_required_libs})
-		add_dependencies(fa_test seeta_facedet_lib)
+        message(FATAL_ERROR "OpenCV not found. Test will not be built.")
     endif()
+
+	find_package(SeetaFaceEngine)
+	if(NOT SEETAFACEENGINE_FOUND)
+		message(FATAL_ERROR "Please set BUILD_EXAMPLES to OFF and isntall SeetaFaceEngine")
+	endif()
+
+	include_directories(${OpenCV_INCLUDE_DIRS} ${SEETAFACEENGINE_INCLUDE_DIRS})
+	add_executable(fa_test src/test/face_alignment_test.cpp)
+	target_link_libraries(fa_test ${OpenCV_LIBS} ${SEETAFACEENGINE_LIBRARIES})
+
+	# Install target
+	INSTALL(TARGETS fa_test RUNTIME DESTINATION bin)
+	# Install example data
+	INSTALL(DIRECTORY data DESTINATION ".")
+
 endif()

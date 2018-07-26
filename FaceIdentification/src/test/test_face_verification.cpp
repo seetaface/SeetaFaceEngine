@@ -64,43 +64,35 @@ using namespace seeta;
 #define EXPECT_NE(a, b) if ((a) == (b)) std::cout << "ERROR: "
 #define EXPECT_EQ(a, b) if ((a) != (b)) std::cout << "ERROR: "
 
-#ifdef _WIN32
-std::string DATA_DIR = "../../data/";
-std::string MODEL_DIR = "../../model/";
-#else
-std::string DATA_DIR = "./data/";
-std::string MODEL_DIR = "./model/";
-#endif
-
-
 int main(int argc, char* argv[]) {
-	if (argc < 4) {
+	if (argc < 2) {
 		std::cout << "Usage: " << argv[0]
-			<< " detection_model_path alignment_model_path recognizer_model_path test_dir"
+			<< " model_path data_path"
 			<< std::endl;
 		return -1;
 	}
 
+	std::string model_dir = argv[1];
+	std::string data_dir = argv[2];
 	// Initialize face detection model
-	seeta::FaceDetection detector(argv[1]);
+	seeta::FaceDetection detector((model_dir + "/seeta_fd_frontal_v1.0.bin").c_str());
 	detector.SetMinFaceSize(40);
 	detector.SetScoreThresh(2.f);
 	detector.SetImagePyramidScaleFactor(0.8f);
 	detector.SetWindowStep(4, 4);
 
 	// Initialize face alignment model 
-	seeta::FaceAlignment point_detector(argv[2]);
+	seeta::FaceAlignment point_detector((model_dir + "/seeta_fa_v1.1.bin").c_str());
 
 	// Initialize face Identification model 
-	FaceIdentification face_recognizer(argv[3]);
-	std::string test_dir = argv[4];
-
+	FaceIdentification face_recognizer((model_dir + "/seeta_fr_v1.0.bin").c_str());
+	
 	//load image
-	cv::Mat gallery_img_color = cv::imread(test_dir + "/images/compare_im/Aaron_Peirsol_0001.jpg", 1);
+	cv::Mat gallery_img_color = cv::imread(data_dir + "/test_face_recognizer/images/compare_im/Aaron_Peirsol_0001.jpg", 1);
 	cv::Mat gallery_img_gray;
 	cv::cvtColor(gallery_img_color, gallery_img_gray, CV_BGR2GRAY);
 
-	cv::Mat probe_img_color = cv::imread(test_dir + "/images/compare_im/Aaron_Peirsol_0004.jpg", 1);
+	cv::Mat probe_img_color = cv::imread(data_dir + "/test_face_recognizer/images/compare_im/Aaron_Peirsol_0004.jpg", 1);
 	cv::Mat probe_img_gray;
 	cv::cvtColor(probe_img_color, probe_img_gray, CV_BGR2GRAY);
 
