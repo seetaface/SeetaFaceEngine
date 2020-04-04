@@ -118,13 +118,15 @@ See comments in the [header file](./include/face_detection.h) for details.
 If you find SeetaFace Detection (FuSt) useful in your research work, please consider citing:
 
   @article{wu2016fust,
+  
   Author = {Shuzhe Wu and  Meina Kan and Zhenliang He  and Shiguang Shan and Xilin Chen},
+  
   Journal = {Neurocomputing},
+  
   Title = {Funnel-Structured Cascade for Multi-View Face Detection with Alignment-Awareness},
+  
   Year = {2017}
   }
-    
-The arXiv preprint of the paper can be found at [http://arxiv.org/abs/1609.07304](http://arxiv.org/abs/1609.07304).
 
 ### License
 
