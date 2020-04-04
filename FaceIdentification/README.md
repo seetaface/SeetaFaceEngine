@@ -73,8 +73,8 @@ See an [example test file](./src/test/test_face_recognizer.cpp) for details.
 If you find SeetaFace Identification (VIPLFaceNet) useful in your research work, please consider citing:
 
     @article{liu2016viplfacenet,
-      Author = {Liu Xin and Kan Meina and Wu Wanglong and Shan Shiguang and Chen Xilin},
-      Journal = {Frontiers of Computer Science},
+      Author = {Xin Liu and Meina Kan and Wanglong Wu and Shiguang Shan and Xilin Chen},
+      Journal = {Frontiers of Computer Science (FCS)},
       Title = {{VIPLFaceNet}: An Open Source Deep Face Recognition SDK},
       Year = {2016}
     }
