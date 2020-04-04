@@ -85,8 +85,8 @@ If you use the code in your work, please consider citing our work as follows:
 
     @inproceedings{zhang2014coarse,
     title={Coarse-to-fine auto-encoder networks (cfan) for real-time face alignment},
-    author={Zhang Jie and Shan Shiguang and Kan Meina and Chen Xilin},
-    booktitle={European Conference on Computer Vision},
+    author={Jie Zhang and Shiguang shan and Meina Kan and Xilin Chen},
+    booktitle={European Conference on Computer Vision (ECCV)},
     year={2014},
     organization={Springer}}
 
