@@ -7,7 +7,7 @@
  * face alignment method described in the following paper:
  *
  *
- *   Coarse-to-Fine Auto-Encoder Networks (CFAN) for Real-Time Face Alignment, 
+ *   Coarse-to-Fine Auto-Encoder Networks (CFAN) for Real-Time Face Alignment,
  *   Jie Zhang, Shiguang Shan, Meina Kan, Xilin Chen. In Proceeding of the
  *   European Conference on Computer Vision (ECCV), 2014
  *
@@ -34,87 +34,73 @@
 #include <iostream>
 #include <string>
 
-#include "cv.h"
-#include "highgui.h"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
 
 #include "face_detection.h"
 #include "face_alignment.h"
 
-#ifdef _WIN32
-std::string DATA_DIR = "../../data/";
-std::string MODEL_DIR = "../../model/";
-#else
-std::string DATA_DIR = "./data/";
-std::string MODEL_DIR = "./model/";
-#endif
-
 int main(int argc, char** argv)
 {
-  // Initialize face detection model
-  seeta::FaceDetection detector("../../../FaceDetection/model/seeta_fd_frontal_v1.0.bin");
-  detector.SetMinFaceSize(40);
-  detector.SetScoreThresh(2.f);
-  detector.SetImagePyramidScaleFactor(0.8f);
-  detector.SetWindowStep(4, 4);
+	if (argc < 4) {
+		std::cout << "Usage: " << argv[0]
+			<< " detection_model_path alignment_model_path image_path"
+			<< std::endl;
+		return -1;
+	}
 
-  // Initialize face alignment model 
-  seeta::FaceAlignment point_detector((MODEL_DIR + "seeta_fa_v1.1.bin").c_str());
+	// Initialize face detection model
+	seeta::FaceDetection detector(argv[1]);
+	detector.SetMinFaceSize(40);
+	detector.SetScoreThresh(2.f);
+	detector.SetImagePyramidScaleFactor(0.8f);
+	detector.SetWindowStep(4, 4);
 
-  //load image
-  IplImage *img_grayscale = NULL;
-  img_grayscale = cvLoadImage((DATA_DIR + "image_0001.png").c_str(), 0);
-  if (img_grayscale == NULL)
-  {
-    return 0;
-  }
+	// Initialize face alignment model 
+	seeta::FaceAlignment point_detector(argv[2]);
 
-  IplImage *img_color = cvLoadImage((DATA_DIR + "image_0001.png").c_str(), 1);
-  int pts_num = 5;
-  int im_width = img_grayscale->width;
-  int im_height = img_grayscale->height;
-  unsigned char* data = new unsigned char[im_width * im_height];
-  unsigned char* data_ptr = data;
-  unsigned char* image_data_ptr = (unsigned char*)img_grayscale->imageData;
-  int h = 0;
-  for (h = 0; h < im_height; h++) {
-    memcpy(data_ptr, image_data_ptr, im_width);
-    data_ptr += im_width;
-    image_data_ptr += img_grayscale->widthStep;
-  }
+	//load image
+	cv::Mat img = cv::imread(argv[3], cv::IMREAD_UNCHANGED);
+	cv::Mat img_gray;
 
-  seeta::ImageData image_data;
-  image_data.data = data;
-  image_data.width = im_width;
-  image_data.height = im_height;
-  image_data.num_channels = 1;
+	if (img.channels() != 1)
+		cv::cvtColor(img, img_gray, cv::COLOR_BGR2GRAY);
+	else
+		img_gray = img;
 
-  // Detect faces
-  std::vector<seeta::FaceInfo> faces = detector.Detect(image_data);
-  int32_t face_num = static_cast<int32_t>(faces.size());
+	seeta::ImageData img_data;
+	img_data.data = img_gray.data;
+	img_data.width = img_gray.cols;
+	img_data.height = img_gray.rows;
+	img_data.num_channels = 1;
 
-  if (face_num == 0)
-  {
-    delete[]data;
-    cvReleaseImage(&img_grayscale);
-    cvReleaseImage(&img_color);
-    return 0;
-  }
+	// Detect faces
+	std::vector<seeta::FaceInfo> faces = detector.Detect(img_data);
 
-  // Detect 5 facial landmarks
-  seeta::FacialLandmark points[5];
-  point_detector.PointDetectLandmarks(image_data, faces[0], points);
+	// Detect 5 facial landmarks
+	for (int i = 0; i < faces.size(); i++)
+	{
+		cv::Rect face_rect;
+		face_rect.x = faces[i].bbox.x;
+		face_rect.y = faces[i].bbox.y;
+		face_rect.width = faces[i].bbox.width;
+		face_rect.height = faces[i].bbox.height;
+		cv::rectangle(img, face_rect, CV_RGB(0, 0, 255), 4, 8, 0);
 
-  // Visualize the results
-  cvRectangle(img_color, cvPoint(faces[0].bbox.x, faces[0].bbox.y), cvPoint(faces[0].bbox.x + faces[0].bbox.width - 1, faces[0].bbox.y + faces[0].bbox.height - 1), CV_RGB(255, 0, 0));
-  for (int i = 0; i<pts_num; i++)
-  {
-    cvCircle(img_color, cvPoint(points[i].x, points[i].y), 2, CV_RGB(0, 255, 0), CV_FILLED);
-  }
-  cvSaveImage("result.jpg", img_color);
+		// Visualize the results
+		seeta::FacialLandmark points[5];
+		if (point_detector.PointDetectLandmarks(img_data, faces[0], points))
+		{
+			for (int j = 0; j < 5; j++)
+				cv::circle(img, cv::Point(points[j].x, points[j].y),
+					2, CV_RGB(0, 255, 0), CV_FILLED);
+		}
+	}
 
-  // Release memory
-  cvReleaseImage(&img_color);
-  cvReleaseImage(&img_grayscale);
-  delete[]data;
-  return 0;
+	cv::namedWindow("Test", cv::WINDOW_AUTOSIZE);
+	cv::imshow("Test", img);
+	cv::waitKey(0);
+	cv::destroyAllWindows();
+
+	return 0;
 }

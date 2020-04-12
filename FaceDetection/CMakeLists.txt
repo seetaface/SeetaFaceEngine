@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.1.0)
 project(seeta_facedet_lib)
 
 # Build options
-option(BUILD_EXAMPLES  "Set to ON to build examples"  ON)
+option(BUILD_EXAMPLES  "Set to ON to build examples"  OFF)
 option(USE_OPENMP      "Set to ON to build use openmp"  ON)
 option(USE_SSE         "Set to ON to build use SSE"  ON)
 
@@ -51,19 +51,36 @@ set(src_files
 
 # Build shared library
 add_library(seeta_facedet_lib SHARED ${src_files})
-set(facedet_required_libs seeta_facedet_lib)
+
+# Install target
+INSTALL(TARGETS ${PROJECT_NAME}
+		RUNTIME DESTINATION bin
+        LIBRARY DESTINATION "lib"
+        ARCHIVE DESTINATION "lib")
+# Install head files
+INSTALL(DIRECTORY include DESTINATION ".")
+# Install model files
+INSTALL(DIRECTORY model DESTINATION ".")
 
 # Build examples
 if (BUILD_EXAMPLES)
     message(STATUS "Build with examples.")
     find_package(OpenCV)
     if (NOT OpenCV_FOUND)
-        message(WARNING "OpenCV not found. Test will not be built.")
-    else()
-        include_directories(${OpenCV_INCLUDE_DIRS})
-        list(APPEND facedet_required_libs ${OpenCV_LIBS})
-        
-        add_executable(facedet_test src/test/facedetection_test.cpp)
-        target_link_libraries(facedet_test ${facedet_required_libs})
+        message(FATAL_ERROR "OpenCV not found. Test will not be built.")
     endif()
+
+	find_package(SeetaFaceEngine)
+	if(NOT SEETAFACEENGINE_FOUND)
+		message(FATAL_ERROR "Please set BUILD_EXAMPLES to OFF and isntall SeetaFaceEngine")
+	endif()
+
+    include_directories(${OpenCV_INCLUDE_DIRS} ${SEETAFACEENGINE_INCLUDE_DIRS})
+    add_executable(facedet_test src/test/facedetection_test.cpp)
+    target_link_libraries(facedet_test ${OpenCV_LIBS} ${SEETAFACEENGINE_LIBRARIES})
+
+	# Install target
+	INSTALL(TARGETS facedet_test RUNTIME DESTINATION bin)
+	# Install example data
+	INSTALL(DIRECTORY data DESTINATION ".")
 endif()

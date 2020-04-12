@@ -1,0 +1,82 @@
+# Author: KangLin(kl222@126.com)
+
+#.rst:
+# SeetaFaceEngine
+# --------
+#
+# Find SeetaFaceEngine
+#
+# Find the SeetaFaceEngine libraries (asound)
+#
+# ::
+#
+#   This module defines the following variables:
+#      SEETAFACEENGINE_FOUND       - True if SeetaFaceEngine libraries are found
+#      SEETAFACEENGINE_LIBRARIES   - Set when SeetaFaceEngine libraries is found
+#      SEETAFACEENGINE_INCLUDE_DIRS - where to find SeetaFaceEngine heard directory.
+#      SEETAFACEENGINE_VERSION_STRING - the version of SeetaFaceEngine found (since CMake 2.8.8)
+
+set(SEETAFACEENGINE_VERSION_STRING @SEETAFACEENGINE_VERSION_MAJOR@.@SEETAFACEENGINE_VERSION_MINOR@.@SEETAFACEENGINE_VERSION_PATCH@)
+
+find_path(FaceDetection_INCLUDE_DIR NAMES face_detection.h
+          DOC "The face detection include directory"
+)
+
+find_library(FaceDetection_LIBRARIE NAMES seeta_facedet_lib
+          DOC "The face detection library"
+)
+
+find_path(FaceAlignment_INCLUDE_DIR NAMES face_alignment.h
+          DOC "The face alignment include directory"
+)
+
+find_library(FaceAlignment_LIBRARIE NAMES seeta_fa_lib
+          DOC "The face alignment library"
+)
+
+find_path(FaceIdentification_INCLUDE_DIR NAMES viplnet.h
+          DOC "The face identification include directory"
+)
+
+find_library(FaceIdentification_LIBRARIE NAMES viplnet
+          DOC "The face identification library"
+)
+
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(SEETAFACEENGINE
+                                  REQUIRED_VARS FaceDetection_INCLUDE_DIR 
+						FaceDetection_LIBRARIE 
+						FaceAlignment_INCLUDE_DIR
+						FaceAlignment_LIBRARIE
+						FaceIdentification_INCLUDE_DIR
+						FaceIdentification_LIBRARIE
+				  VERSION_VAR   SEETAFACEENGINE_VERSION_STRING
+				  )
+
+if(SEETAFACEENGINE_FOUND)
+
+  set( SEETAFACEENGINE_LIBRARIES
+	${FaceIdentification_LIBRARIE}
+	${FaceAlignment_LIBRARIE} 
+	${FaceDetection_LIBRARIE}
+	)
+  set( SEETAFACEENGINE_INCLUDE_DIRS
+	${FaceIdentification_INCLUDE_DIR}
+	${FaceAlignment_INCLUDE_DIR}
+	${FaceDetection_INCLUDE_DIR}
+	)
+
+  get_filename_component(SEETAFACEENGINE_PATH "${FaceDetection_LIBRARIE}" DIRECTORY)
+  file(TO_NATIVE_PATH "${SEETAFACEENGINE_PATH}" SEETAFACEENGINE_PATH)
+  message(STATUS "Found SeetaFaceEngine ${SEETAFACEENGINE_VERSION_STRING} in ${SEETAFACEENGINE_PATH}")
+  get_filename_component(SEETAFACEENGINE_BIN_PATH "${FaceDetection_LIBRARIE}" DIRECTORY)
+  get_filename_component(SEETAFACEENGINE_BIN_PATH "${SEETAFACEENGINE_BIN_PATH}/../bin" ABSOLUTE)
+  file(TO_NATIVE_PATH "${SEETAFACEENGINE_BIN_PATH}" SEETAFACEENGINE_BIN_PATH)
+  message(STATUS "You might need to add ${SEETAFACEENGINE_BIN_PATH} to your PATH to be able to run your applications.")
+endif()
+
+mark_as_advanced(FaceDetection_INCLUDE_DIR 
+	FaceDetection_LIBRARIE 
+	FaceAlignment_INCLUDE_DIR
+	FaceAlignment_LIBRARIE
+	FaceIdentification_INCLUDE_DIR
+	FaceIdentification_LIBRARIE)
