@@ -53,6 +53,8 @@ set(src_files
 add_library(seeta_facedet_lib SHARED ${src_files})
 set(facedet_required_libs seeta_facedet_lib)
 
+set(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
+
 # Build examples
 if (BUILD_EXAMPLES)
     message(STATUS "Build with examples.")
