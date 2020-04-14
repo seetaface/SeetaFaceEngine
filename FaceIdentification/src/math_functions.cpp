@@ -33,11 +33,51 @@
 #include <xmmintrin.h>
 #include <cstdint>
 
+#ifdef __ARM_EABI__
+#include "arm_neon.h"
+#else
 #ifdef _WIN32
 #include <intrin.h>
 #else
 #include <x86intrin.h>
 #endif
+#endif
+
+#ifdef __ARM_EABI__
+
+#ifdef __ARM_NEON__
+
+float simd_dot(const float* src1, const float* src2, const long& count) {
+	long i = 0;
+
+	float32x4_t sum_vec = vdupq_n_f32(0);
+	float32x4_t data_a, data_b;
+	for (; i <count-3; i+=4){
+		data_a = vld1q_f32(&src1[i]);
+		data_b = vld1q_f32(&src2[i]);
+		sum_vec = vaddq_f32(sum_vec, vmulq_f32(data_a, data_b));
+	}
+
+	float sum = sum_vec[0] + sum_vec[1] + sum_vec[2] + sum_vec[3];
+	for (; i < count; i++){
+		sum += src1[i] * src2[i];
+	}
+	return sum;
+}
+
+#else // __ARM_NEON__
+
+float simd_dot(const float* x, const float* y, const long& len) {
+	float inner_prod = 0.0f;
+	for (long i = 0; i < len; i++) {
+		inner_prod += x[i] * y[i];
+	}
+	return inner_prod;
+}
+
+#endif // end __ARM_NEON__
+
+#else // __ARM_EABI__
 
 float simd_dot(const float* x, const float* y, const long& len) {
   float inner_prod = 0.0f;
@@ -60,6 +100,8 @@ float simd_dot(const float* x, const float* y, const long& len) {
   }
   return inner_prod;
 }
+
+#endif // end __ARM_EABI__
 
 void matrix_procuct(const float* A, const float* B, float* C, const int n,
     const int m, const int k, bool ta, bool tb) {
