@@ -81,6 +81,7 @@ public:
 		||  crop_width_ != aligner_->CropHeight())*/
     aligner_.reset(new Aligner(crop_height_, crop_width_, "linear"));
     net_ = CommonNet::Load(file);
+    fclose(file);
     return 1;
   }
 
