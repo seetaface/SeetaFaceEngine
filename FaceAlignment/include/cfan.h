@@ -34,6 +34,8 @@
 #include "sift.h"
 #include "common.h"
 
+using namespace std;
+
 class CCFAN{
  public:
   /** A constructor.
