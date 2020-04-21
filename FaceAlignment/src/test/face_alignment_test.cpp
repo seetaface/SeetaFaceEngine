@@ -51,7 +51,7 @@ std::string MODEL_DIR = "./model/";
 int main(int argc, char** argv)
 {
   // Initialize face detection model
-  seeta::FaceDetection detector("../../../FaceDetection/model/seeta_fd_frontal_v1.0.bin");
+  seeta::FaceDetection detector("../FaceDetection/model/seeta_fd_frontal_v1.0.bin");
   detector.SetMinFaceSize(40);
   detector.SetScoreThresh(2.f);
   detector.SetImagePyramidScaleFactor(0.8f);
